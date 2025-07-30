@@ -1,0 +1,9 @@
+package model
+
+
+type Employee struct {
+	Id     string  `json:"id,omitempty" bson:"_id,omitempty"`
+	Name   string  `json:"name"`
+	Salary float64 `json:"salary"`
+	Age    float64 `json:"age"`
+}
