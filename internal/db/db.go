@@ -2,6 +2,8 @@ package db
 
 import (
 	"context"
+	"os"
+	"path/filepath"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -36,4 +38,13 @@ func ConnectDb() error {
 
 func GetEmployeeCollection() *mongo.Collection {
 	return MG.Db.Collection(EmployeeCollection)
+}
+
+func GetUploadDir() (string, error) {
+	basePath, err := os.Getwd()
+	if err != nil {
+		return "/", err
+	}
+	filePath := filepath.Join(basePath, "internal", "db", "upload")
+	return filePath, nil
 }

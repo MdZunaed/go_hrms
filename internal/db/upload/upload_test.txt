@@ -1,0 +1,3 @@
+This file is a test file to upload file into HRMS Api, made by Go.
+
+Good luck, Thanks!
