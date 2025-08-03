@@ -24,7 +24,7 @@ func main() {
 
 	// Authentication
 
-	app.Route("/auth", func (route fiber.Router)  {
+	app.Route("/auth", func(route fiber.Router) {
 		route.Post("/signup", auth.Signup())
 		route.Post("/login", auth.Login())
 	})
@@ -34,9 +34,14 @@ func main() {
 	app.Route("/employee", func(emp fiber.Router) {
 		emp.Get("/", employee.GetEmployees())
 		emp.Post("/", mw.VerifyToken(), employee.CreateEmployee())
-		emp.Put("/:id", employee.UpdateEmployee())
-		emp.Delete("/:id", employee.DeleteEmployee())
+		emp.Put("/:id", mw.VerifyToken(), employee.UpdateEmployee())
+		emp.Delete("/:id", mw.VerifyToken(), employee.DeleteEmployee())
 	})
+
+	// Protected
+
+	admin := app.Group("/admin", mw.VerifyToken())
+	admin.Get("verify", auth.TestMiddleware())
 
 	app.Get("/download", file.DownloadFile())
 	app.Post("/upload", file.UploadMultiFile())

@@ -95,3 +95,9 @@ func Login() fiber.Handler {
 		})
 	}
 }
+
+func TestMiddleware() fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Token is valid"})
+	}
+}
