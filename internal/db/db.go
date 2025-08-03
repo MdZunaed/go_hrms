@@ -20,6 +20,7 @@ var MG MongoInstance
 const dbName = "hrms"
 const MongoURI = "mongodb://localhost:27017/" + dbName
 const EmployeeCollection = "employees"
+const UserCollection = "users"
 
 func ConnectDb() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
@@ -34,6 +35,10 @@ func ConnectDb() error {
 		Db:     db,
 	}
 	return nil
+}
+
+func GetUserCollection() *mongo.Collection {
+	return MG.Db.Collection(UserCollection)
 }
 
 func GetEmployeeCollection() *mongo.Collection {

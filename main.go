@@ -4,7 +4,8 @@ import (
 	"log"
 
 	"github.com/MdZunaed/go_hrms/internal/db"
-	employee "github.com/MdZunaed/go_hrms/internal/handler"
+	"github.com/MdZunaed/go_hrms/internal/handler/auth"
+	employee "github.com/MdZunaed/go_hrms/internal/handler/employee"
 	"github.com/MdZunaed/go_hrms/internal/handler/file"
 	mw "github.com/MdZunaed/go_hrms/internal/middlewares"
 	"github.com/gofiber/fiber/v2"
@@ -20,6 +21,15 @@ func main() {
 	app.Get("any/:any", func(c *fiber.Ctx) error {
 		return c.SendString(c.Params("any"))
 	})
+
+	// Authentication
+
+	app.Route("/auth", func (route fiber.Router)  {
+		route.Post("/signup", auth.Signup())
+		route.Post("/login", auth.Login())
+	})
+
+	// Employee
 
 	app.Route("/employee", func(emp fiber.Router) {
 		emp.Get("/", employee.GetEmployees())
